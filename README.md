@@ -2,8 +2,8 @@
 Add a frontend to last week's chat room project backend.
 
 
-# Assignment:
-(Aug 13- 14, 2020, Pete/Billy mob)
+## Assignment:
+### (Aug 13- 14, 2020, Pete/Billy mob)
 
 ## Chat Room - Phase 2
 
