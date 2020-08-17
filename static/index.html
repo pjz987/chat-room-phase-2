@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: rgb(184, 183, 183);
+    }
+
+    select {
+            text-transform:capitalize;
+            color: gray;
+        }
+
+    select:focus {
+      outline: transparent;
+    }
+
+    #display-1 {
+      display: none;
+      text-align: center;
+    }
+
+    #input_text {
+      width: 50%;
+    }
+
+    #input_text:focus {
+      color: maroon;
+      outline: transparent;
+    }
+
+    #input_new_room {
+      margin: 4px;
+    }
+
+    #input_new_room:focus {
+      color: maroon;
+      outline: transparent;
+    }
+
+    #username_input {
+      text-align: center;
+    }
+
+    #username_input:focus {
+      color: maroon;
+      outline: transparent;
+
+    }
+
+    #username {
+      text-align: center;
+    }
+
+    #header {
+      text-align: center;
+    }
+
+    h1 {
+      color: maroon;
+      font-family: 'Special Elite', cursive;
+    }
+
+    #message {
+      text-align: justify;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="header">
+    <h1>Welcome to...Chatter</h1>
+  </div>
+  <div id="display-1">
+    <div>
+      <select class="box" id="room">
+        <optgroup label="Chat rooms available...">
+          <option value="" id="drop-1" disabled="disabled" selected="selected" hidden>Rooms...</option>
+          <option value="food">Food</option>
+          <option value="drink">Drink</option>
+          <option value="tattoo">Tattoo</option>
+        </optgroup>
+      </select>
+
+      <input id='input_text' type= 'text' placeholder="Enter your message...">
+      <button id='chat_btn'>Send</button>
+    </div>
+    <div>
+      <input id='input_new_room' type= 'text' placeholder="Create a new room...">
+      <button id='new_room_btn'>Enter</button>
+    </div>
+  </div> 
+  
+  <!-- <ul id="messages"></ul> -->
+
+
+  <script src="bundle.js"></script>
+</body>
+</html>
+
+
