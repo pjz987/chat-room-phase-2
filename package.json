@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-server": "npx nodemon index.js",
+    "watch-express": "npx nodemon express.js",
     "watch": "npx watchify static/main.js -o static/bundle.js --debug --verbose"
   },
   "author": "",
@@ -15,7 +16,10 @@
   },
   "dependencies": {
     "browserify": "^16.5.2",
+    "express": "^4.17.1",
     "http-hash-router": "^2.0.1",
+    "moment": "^2.27.0",
+    "socket.io": "^2.3.0",
     "st": "^2.0.0",
     "watchify": "^3.11.1",
     "yo-yo": "^1.4.1"
