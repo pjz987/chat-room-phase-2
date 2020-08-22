@@ -29,6 +29,19 @@ socket.on('get rooms', rooms => {
 const usernameEl = Username(body, state)
 body.appendChild(usernameEl)
 
+inputText.addEventListener('keydown', evt => {
+  console.log('hey')
+  socket.emit('typing', state.name)
+})
+socket.on('typing', user => {
+  if (user !== state.user) {
+    el.lastElementChild.innerText = `${user} is typing...`
+  }
+})
+socket.on('stop typing', () => {
+  el.lastElementChild.innerText = ''
+})
+
 chatBtn.addEventListener('click', evt => {
   socket.emit('chat message', inputText.value, state.name, state.room)
   inputText.value = ''

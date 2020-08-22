@@ -1,5 +1,5 @@
 node_modules
-messages
+messages.sqlite3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

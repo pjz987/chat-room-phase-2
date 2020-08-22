@@ -5,10 +5,11 @@ const styleMessage = require('./style-message')
 
 function Message (message, state) {
   const styleObj = styleMessage(message.text)
+  console.log(message.date)
   const momentDate = moment(message.date).format('h:mm:ss a')
-  return yo`<div class="message${message.nick === state.name ? ' end' : ' start'}" >
+  return yo`<div class="message${message.username === state.name ? ' end' : ' start'}" >
     <li class="msg" style="align: right">
-      <span style="${message.nick === state.name ? 'color: gold' : 'color: maroon'}"><b><i>${message.nick}:</i></b></span>
+      <span style="${message.username === state.name ? 'color: #ba6c48' : 'color: #8f2543'}"><b><i>${message.username}:</i></b></span>
       <span style="${styleObj.outStyle}">${styleObj.outText}</span>
       <span> -- ${momentDate}</span>
     </li>
@@ -16,7 +17,10 @@ function Message (message, state) {
 }
 
 function Messages (messages, state) {
-  return yo`<ul id="messages" style="list-style-type: none">${messages.map(message => Message(message, state))}</ul>`
+  return yo`<ul id="messages" style="list-style-type: none">
+    ${messages.map(message => Message(message, state))}
+    <div></div>
+  </ul>`
 }
 
 function Username (body, state) {
