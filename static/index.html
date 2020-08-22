@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +13,9 @@
     }
 
     select {
-            text-transform:capitalize;
-            color: gray;
-        }
+      text-transform: capitalize;
+      color: gray;
+    }
 
     select:focus {
       outline: transparent;
@@ -70,8 +71,26 @@
       text-align: justify;
     }
 
+    #messages {
+      display: flex;
+      flex-direction: column;
+      padding-right: 40px;
+      border: 2px solid black;
+      border-radius: 5px;
+      height: 70vh;
+      overflow-y: auto;
+    }
+
+    .end {
+      align-self: flex-end;
+    }
+
+    .start {
+      align-self: flex-start;
+    }
   </style>
 </head>
+
 <body>
   <div id="header">
     <h1>Welcome to...Chatter</h1>
@@ -86,21 +105,20 @@
           <option value="tattoo">Tattoo</option>
         </optgroup>
       </select>
-
-      <input id='input-text' type= 'text' placeholder="Enter your message...">
-      <button id='chat-btn'>Send</button>
-    </div>
-    <div>
-      <input id='input-new-room' type= 'text' placeholder="Create a new room...">
+      <input id='input-new-room' type='text' placeholder="Create a new room...">
       <button id='new-room-btn'>Enter</button>
     </div>
-  </div> 
-  
+    <div>
+    </div>
+    <ul id="messages"></ul>
+    <input id='input-text' type='text' placeholder="Enter your message...">
+    <button id='chat-btn'>Send</button>
+  </div>
+
   <!-- <ul id="messages"></ul> -->
 
 
   <script src="bundle.js"></script>
 </body>
+
 </html>
-
-

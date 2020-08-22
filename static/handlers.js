@@ -1,10 +1,8 @@
-function createUsernameHandler (el, body, username) {
+function createUsernameHandler (el, body, state) {
   return function () {
-    console.log(username)
-    username.name = document.querySelector('#username_input').value
-    console.log(username)
+    state.name = document.querySelector('#username_input').value
     body.removeChild(el)
-    username.display_.style.display = 'block'
+    state.display_.style.display = 'block'
   }
 }
 

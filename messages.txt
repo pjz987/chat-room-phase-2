@@ -50,3 +50,38 @@
 {"text":"hey","nick":"test","room":"Programming","date":"2020-08-20T04:12:15.973Z"}
 {"text":"I have 155 tatoooos!","nick":"Test User","room":"tattoo","date":"2020-08-20T04:15:27.365Z"}
 {"text":"I have 156 yaaatoos!","nick":"Test User2","room":"tattoo","date":"2020-08-20T04:15:51.835Z"}
+{"text":"I like green [[color=green]]","nick":"Pete","room":"colors","date":"2020-08-21T02:03:33.372Z"}
+{"text":"Hi how's it going [[color=green]] [[text-decoration=strikethrough]]?","nick":"Pete","room":"colors","date":"2020-08-21T02:04:51.139Z"}
+{"text":"Hi how's it going [[color=green]] [[text-decoration=line-through]]?","nick":"Pete","room":"colors","date":"2020-08-21T02:05:25.855Z"}
+{"text":"I like salmon [[color=#FA737B]]","nick":"Pete","room":"colors","date":"2020-08-21T02:06:48.297Z"}
+{"text":"am i gold?","nick":"Pete","room":"Programming","date":"2020-08-21T02:24:59.453Z"}
+{"text":"🍕","nick":"Pete","room":"Houses","date":"2020-08-21T02:29:22.402Z"}
+{"text":"Donkey Kong 2: Diddy's Kong Quest","nick":"Pete","room":"Video Games","date":"2020-08-21T02:44:15.418Z"}
+{"text":"test","nick":"test","room":"Flowers","date":"2020-08-21T03:12:25.213Z"}
+{"text":"Donkey Kong 3: Dixie's Double Trouble","nick":"Pete","room":"Video Games","date":"2020-08-21T03:13:49.100Z"}
+{"text":"Daisies","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:05.063Z"}
+{"text":"Petunias","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:08.737Z"}
+{"text":"Roses","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:13.867Z"}
+{"text":"Violets","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:17.194Z"}
+{"text":"Waterlilies","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:23.414Z"}
+{"text":"Clamydas","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:31.036Z"}
+{"text":"Dandelion","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:37.112Z"}
+{"text":"Crysanthemums","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:48.697Z"}
+{"text":"lilacs","nick":"Pete","room":"Flowers","date":"2020-08-21T03:15:52.322Z"}
+{"text":"Tulips","nick":"Pete","room":"Flowers","date":"2020-08-21T03:16:05.914Z"}
+{"text":"Sunflowers","nick":"Pete","room":"Flowers","date":"2020-08-21T03:16:09.446Z"}
+{"text":"Hydrangea","nick":"Pete","room":"Flowers","date":"2020-08-21T03:16:15.988Z"}
+{"text":"Poppies","nick":"Pete","room":"Flowers","date":"2020-08-21T03:16:21.942Z"}
+{"text":"Red Roses","nick":"Pete","room":"Flowers","date":"2020-08-21T03:16:44.560Z"}
+{"text":"White Roses","nick":"Pete","room":"Flowers","date":"2020-08-21T03:16:47.625Z"}
+{"text":"Pink Roses","nick":"Pete","room":"Flowers","date":"2020-08-21T03:16:50.748Z"}
+{"text":"Oxeye Daisies","nick":"Pete","room":"Flowers","date":"2020-08-21T03:17:05.281Z"}
+{"text":"clovers","nick":"Pete","room":"Flowers","date":"2020-08-21T03:17:11.141Z"}
+{"text":"Rafflesia","nick":"Pete","room":"Flowers","date":"2020-08-21T03:17:24.581Z"}
+{"text":"Venus Fly Trap","nick":"Pete","room":"Flowers","date":"2020-08-21T03:17:28.758Z"}
+{"text":"Daffodils","nick":"Pete","room":"Flowers","date":"2020-08-21T03:17:34.520Z"}
+{"text":"Goldenrod","nick":"Pete","room":"Flowers","date":"2020-08-21T03:17:45.833Z"}
+{"text":"Castelvania!","nick":"Sally","room":"Video Games","date":"2020-08-21T03:41:54.014Z"}
+{"text":"Super Metroid","nick":"Dick","room":"Video Games","date":"2020-08-21T03:42:11.031Z"}
+{"text":"Sonic the Hedgehog [[color=blue]]","nick":"Sally","room":"Video Games","date":"2020-08-21T03:42:38.717Z"}
+{"text":"Pansies","nick":"Sally","room":"Flowers","date":"2020-08-21T03:46:55.166Z"}

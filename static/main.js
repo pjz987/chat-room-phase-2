@@ -12,8 +12,9 @@ const chatRoom = document.querySelector('#room')
 const inputNewRoom = document.querySelector('#input-new-room')
 const newRoomBtn = document.querySelector('#new-room-btn')
 
-const el = yo`<ul></ul>`
+const el = document.querySelector('#messages')
 const state = {
+  user: undefined,
   name: '',
   room: '',
   display_: display
@@ -30,6 +31,7 @@ body.appendChild(usernameEl)
 
 chatBtn.addEventListener('click', evt => {
   socket.emit('chat message', inputText.value, state.name, state.room)
+  inputText.value = ''
 })
 
 newRoomBtn.addEventListener('click', event => {
@@ -43,10 +45,10 @@ chatRoom.addEventListener('change', evt => {
   socket.emit('room', chatRoom.value)
 })
 socket.on('render messages', messages => {
-  yo.update(el, Messages(messages.filter(msg => msg.room === state.room)))
+  yo.update(el, Messages(messages.filter(msg => msg.room === state.room), state))
 })
 
-body.appendChild(el)
+// body.appendChild(el)
 
 // Mob (Pete/Billy 8/13-14/2020)
 // Mob (Pete/Sam 8/19-????)
