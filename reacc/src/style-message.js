@@ -16,11 +16,6 @@ const styleMessage = (message) => {
     outText,
     outStyle
   }
-  // console.log({ startIndex, endIndex })
-  // console.log(message.text[startIndex - 1], message.text[endIndex + 1])
-  // console.log(style)
 }
-
-// console.log(func({ text: "Hi how's it going [[color=green]] [[text-decoration=strikethrough]]?" }))
 
 export default styleMessage

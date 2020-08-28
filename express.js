@@ -4,18 +4,7 @@ const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const { openDb, writeDb } = require('./sql-db')
-// const MESSAGES_PATH = './messages.txt'
 
-// function readDb (cb) {
-//   fs.readFile(MESSAGES_PATH, (err, data) => {
-//     if (err) return console.log(err)
-//     const lines = data.toString().split('\n')
-//     const messages = lines.filter(line => line !== '').map(line => JSON.parse(line))
-//     cb(messages)
-//   })
-// }
-
-// app.use(express.static('static'))
 app.get('/', (req, res) => {
   res.json({ test: 'test' })
   console.log('work?')
@@ -36,29 +25,18 @@ io.on('connection', socket => {
       console.log(rooms)
       io.emit('get rooms', rooms)
     })
-    // readDb((messages) => {
-    // })
   })
 
   socket.on('chat message', (text, nick, room) => {
     writeDb(nick, text, room).then(messages => {
       io.emit('render messages', messages)
     })
-    // const data = JSON.stringify({ text, nick, room, date: new Date() })
-    // fs.appendFile(MESSAGES_PATH, data + '\n', err => {
-    //   if (err) return console.log(err)
-    //   readDb((messages) => {
-    //     io.emit('render messages', messages)
-    //   })
-    // })
   })
 
   socket.on('room', room => {
     openDb().then(messages => {
       io.emit('render messages', messages)
     })
-    // readDb(messages => {
-    // })
   })
 
   let typing

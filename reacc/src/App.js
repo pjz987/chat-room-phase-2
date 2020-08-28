@@ -1,43 +1,55 @@
 import React from 'react'
 import logo from './logo.svg'
 import './App.css'
-import Username from './Components'
+import { Username, Messages, SelectRoom } from './Components'
 import io from 'socket.io-client'
 const socket = io()
-
-function socketRooms (cb) {
-  socket.emit('get rooms')
-  socket.on('get rooms', (rooms) => cb(rooms))
-}
 
 class App extends React.Component {
   constructor (props) {
     super(props)
-    // fetch ('/')
-    //   // .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data)
-    //     // updateState('messages', data)
-    //   }).catch(err => console.log(err))
-    // socket.emit('get rooms')
-    // socket.on('get rooms', (rooms) => {
-    //   this.setState({
-    //     rooms: rooms
-    //   }, () => console.log(this.state))
-    // })
     this.state = {
-      user: null
-      // rooms: rooms
+      user: null,
+      messages: null,
+      room: null
     }
   }
 
-  testFunc () {
-    console.log('test func')
+  socketRooms (cb) {
+    socket.emit('get rooms')
+    socket.on('get rooms', (rooms) => cb(rooms))
+  }
+
+  socketRoom (room, cb) {
+    this.setState({
+      room: room
+    })
+    socket.emit('room', room)
+    socket.on('render messages', messages => cb(messages))
+  }
+
+  socketChat (text, cb) {
+    socket.emit('chat message', text, this.state.user, this.state.room)
+    socket.on('render messages', messages => cb(messages))
+  }
+
+  handleChatMessage (evt) {
+    this.socketChat(document.querySelector('#input-text').value, messages => {
+      this.renderMessages(messages)
+    })
+  }
+
+  handleNewRoom (evt) {
+    console.log(this)
+    const newRoom = document.querySelector('#input-new-room').value
+    this.setState({
+      rooms: this.state.rooms.concat([newRoom]),
+      room: newRoom
+    })
   }
 
   setUser () {
-    socket.emit('say hey')
-    socketRooms(rooms => {
+    this.socketRooms(rooms => {
       this.setState({
         user: document.querySelector('#username-input').value,
         rooms: rooms
@@ -45,13 +57,19 @@ class App extends React.Component {
     })
   }
 
+  handleChangeRoom (evt) {
+    this.socketRoom(evt.target.value, messages => {
+      this.renderMessages(messages)
+    })
+  }
+
+  renderMessages (messages) {
+    this.setState({
+      messages: messages.filter(msg => msg.room === this.state.room)
+    })
+  }
+
   render () {
-    // socket.emit('get rooms')
-    // socket.on('get rooms', rooms => {
-    //   this.setState({
-    //     rooms: rooms
-    //   }, () => console.log(this.state))
-    // })
     if (!this.state.user) {
       return (
         <div>
@@ -69,21 +87,14 @@ class App extends React.Component {
         </div>
         <div id='display-1'>
           <div>
-            <select className='box' id='room'>
-              <optgroup label='Chat rooms available...'>
-                <option value='' id='drop-1' disabled='disabled' defaultValue hidden>Rooms...</option>
-                {this.state.rooms.map(room => {
-                  return (<option>{room}</option>)
-                })}
-              </optgroup>
-            </select>
+            <SelectRoom onChange={evt => this.handleChangeRoom(evt)} rooms={this.state.rooms} />
             <input id='input-new-room' type='text' placeholder='Create a new room...' />
-            <button id='new-room-btn'>Enter</button>
+            <button onClick={evt => this.handleNewRoom(evt)} id='new-room-btn'>Enter</button>
           </div>
           <div />
-          <ul id='messages' />
+          <Messages user={this.state.user} messages={this.state.messages} />
           <input id='input-text' type='text' placeholder='Enter your message...' />
-          <button id='chat-btn'>Send</button>
+          <button onClick={evt => this.handleChatMessage(evt)} id='chat-btn'>Send</button>
         </div>
       </div>
     )

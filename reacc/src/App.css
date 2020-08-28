@@ -1,38 +1,98 @@
-.App {
+* {
+  font-family: 'Russo One', sans-serif;
+}
+
+body {
+  background-color: #89aab0;
+}
+
+select {
+  text-transform: capitalize;
+  color: #5e7385;
+}
+
+select:focus {
+  outline: transparent;
+}
+
+#display-1 {
+  /* display: none; */
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#input_text {
+  width: 50%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#input_text:focus {
+  color: #8f2543;
+  outline: transparent;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#input_new_room {
+  margin: 4px;
+}
+
+#input_new_room:focus {
+  color: #8f2543;
+  outline: transparent;
+}
+
+#username_input {
+  text-align: center;
+}
+
+#username_input:focus {
+  color: #8f2543;
+  outline: transparent;
+
+}
+
+#username {
+  text-align: center;
+}
+
+#header {
+  text-align: center;
+}
+
+h1 {
+  color: #8f2543;
+  font-family: 'Special Elite', cursive;
+}
+
+#message {
+  text-align: justify;
+}
+
+#messages {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding-right: 40px;
+  border: 2px solid #272442;
+  border-radius: 5px;
+  height: 70vh;
+  overflow-y: auto;
+  background-color: #bcd1d0;
+  list-style-type: none;
 }
 
-.App-link {
-  color: #61dafb;
+.end {
+  align-self: flex-end;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.start {
+  align-self: flex-start;
+}
+
+.disabled {
+  color: grey;
+}
+
+span.user {
+  color: #ba6c48;
+}
+
+span.not-user {
+  color: #8f2543;
 }
