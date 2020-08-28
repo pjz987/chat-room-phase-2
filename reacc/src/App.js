@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from './logo.svg'
 import './App.css'
 import { Username, Messages, SelectRoom } from './Components'
 import io from 'socket.io-client'
@@ -73,6 +72,7 @@ class App extends React.Component {
     if (!this.state.user) {
       return (
         <div>
+          <link href='https://fonts.googleapis.com/css2?family=Russo+One&display=swap' rel='stylesheet' />
           <div id='header'>
             <h1>Welcome to...Chatter</h1>
           </div>
@@ -82,6 +82,7 @@ class App extends React.Component {
     }
     return (
       <div>
+        <link href='https://fonts.googleapis.com/css2?family=Russo+One&display=swap' rel='stylesheet' />
         <div id='header'>
           <h1>Welcome to...Chatter</h1>
         </div>

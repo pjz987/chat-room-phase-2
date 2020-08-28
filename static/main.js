@@ -57,6 +57,7 @@ chatRoom.addEventListener('change', evt => {
   state.room = chatRoom.value
   socket.emit('room', chatRoom.value)
 })
+
 socket.on('render messages', messages => {
   yo.update(el, Messages(messages.filter(msg => msg.room === state.room), state))
 })

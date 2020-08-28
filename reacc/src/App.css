@@ -1,5 +1,12 @@
+/* @font-face {
+  font-family: "Russo One";
+  font-style: normal;
+  src: url("fonts/RussoOne-Regular.ttf") format("truetype");
+  src: local("Russo One");
+} */
+
 * {
-  font-family: 'Russo One', sans-serif;
+  font-family: "Russo One", sans-serif;
 }
 
 body {
@@ -58,7 +65,7 @@ select:focus {
 
 h1 {
   color: #8f2543;
-  font-family: 'Special Elite', cursive;
+  /* font-family: 'Special Elite', cursive; */
 }
 
 #message {

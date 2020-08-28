@@ -49,7 +49,7 @@ function Message (props) {
   return (
     <div className={isUser ? 'message end' : 'message start'}>
       <li className='msg'>
-        <span className={className}><b><i>{props.message.username}:</i></b></span>
+        <span className={className}><b><i>{props.message.username}: </i></b></span>
         <StyleMessage text={props.message.text} />
         <span> -- {momentDate}</span>
       </li>
