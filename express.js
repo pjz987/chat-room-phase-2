@@ -15,12 +15,18 @@ const { openDb, writeDb } = require('./sql-db')
 //   })
 // }
 
-app.use(express.static('static'))
-
+// app.use(express.static('static'))
+app.get('/', (req, res) => {
+  res.json({ test: 'test' })
+  console.log('work?')
+})
 io.on('connection', socket => {
+  console.log('someone\'s on')
+  socket.on('say hey', () => console.log('hey'))
+
   socket.on('get rooms', () => {
     openDb().then(messages => {
-      console.log(messages)
+      console.log({ messages })
       const rooms = []
       messages.forEach(msg => {
         if (!rooms.includes(msg.room)) {
