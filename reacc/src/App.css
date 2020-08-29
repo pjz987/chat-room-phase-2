@@ -23,7 +23,6 @@ select:focus {
 }
 
 #display-1 {
-  /* display: none; */
   text-align: center;
 }
 
@@ -102,4 +101,8 @@ span.user {
 
 span.not-user {
   color: #8f2543;
+}
+
+.flex {
+  display: flex;
 }

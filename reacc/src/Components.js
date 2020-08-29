@@ -3,10 +3,15 @@ import moment from 'moment'
 
 function Username (props) {
   return (
-    <div id='username'>
-      <input id='username-input' placeholder='Enter username...' type='text' />
-      <button id='username_btn' onClick={props.onClick}>Submit</button>
-    </div>
+    <form id='username' onSubmit={props.onSubmit}>
+      <input
+        id='username-input'
+        placeholder='Enter username...'
+        type='text'
+        onChange={props.onChange}
+      />
+      <button id='username_btn'>Submit</button>
+    </form>
   )
 }
 
@@ -24,9 +29,7 @@ function StyleMessage (props) {
   let text = props.text
   let start = 0
   let end = 0
-  let counter = 0
   while (true) {
-    console.log({ text }, counter++)
     start = text.indexOf('[[')
     if (start === -1) break
     end = text.indexOf(']]')
@@ -35,7 +38,6 @@ function StyleMessage (props) {
     const styleArr = style.slice(2, style.length - 2).split('=')
     styleObj[styleArr[0]] = styleArr[1]
   }
-  console.log({ text })
   return (
     <span style={styleObj}>{text}</span>
   )
@@ -57,15 +59,54 @@ function Message (props) {
   )
 }
 
+function NewRoom (props) {
+  return (
+    <form onSubmit={props.onSubmit} style={{ display: 'inline' }}>
+      <input
+        value={props.value}
+        onChange={props.onChange}
+        id='input-new-room'
+        type='text'
+        placeholder='Create a new room...'
+      />
+      <button id='new-room-btn'>Enter</button>
+    </form>
+  )
+}
+
 function SelectRoom (props) {
   return (
-    <select onChange={props.onChange} id='room'>
+    <select value={props.value} onChange={props.onChange} id='room'>
       <optgroup label='Pick a room...'>
-        <option value='' id='drop-1' disabled='disabled' defaultValue className='disabled' hidden>Rooms...</option>
+        <option
+          value=''
+          id='drop-1'
+          disabled='disabled'
+          defaultValue
+          className='disabled'
+          hidden
+        >
+          Rooms...
+        </option>
         {props.rooms.map(room => <option key={room}>{room}</option>)}
       </optgroup>
     </select>
   )
 }
 
-export { Username, Messages, SelectRoom }
+function MessageForm (props) {
+  return (
+    <form onSubmit={props.onSubmit}>
+      <input
+        value={props.value}
+        onChange={props.onChange}
+        id='input-text'
+        type='text'
+        placeholder='Enter your message...'
+      />
+      <button id='chat-btn'>Send</button>
+    </form>
+  )
+}
+
+export { Username, Messages, SelectRoom, NewRoom, MessageForm }

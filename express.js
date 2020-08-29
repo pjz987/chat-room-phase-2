@@ -39,6 +39,12 @@ io.on('connection', socket => {
     })
   })
 
+  socket.on('get messages', () => {
+    openDb().then(messages => {
+      io.emit('render messages', messages)
+    })
+  })
+
   let typing
 
   socket.on('typing', user => {
