@@ -10,20 +10,14 @@ class App extends React.Component {
     this.state = {
       user: '',
       room: '',
-      inputUser: '',
       rooms: [],
-      newRoom: '',
-      messages: [],
-      messageText: ''
+      messages: []
     }
 
     this.handleSubmitUser = this.handleSubmitUser.bind(this)
-    this.handleUserChange = this.handleUserChange.bind(this)
-    this.handleNewRoomChange = this.handleNewRoomChange.bind(this)
     this.handleNewRoomSubmit = this.handleNewRoomSubmit.bind(this)
     this.handleChangeRoom = this.handleChangeRoom.bind(this)
     this.handleSubmitMessage = this.handleSubmitMessage.bind(this)
-    this.handleChangeMessage = this.handleChangeMessage.bind(this)
   }
 
   componentDidMount () {
@@ -60,41 +54,25 @@ class App extends React.Component {
     })
   }
 
-  handleSubmitUser (evt) {
-    this.setState({ user: this.state.inputUser })
-    evt.preventDefault()
+  handleSubmitUser (user) {
+    this.setState({ user: user })
   }
 
-  handleUserChange (evt) {
-    this.setState({ inputUser: evt.target.value })
-  }
-
-  handleNewRoomChange (evt) {
-    this.setState({ newRoom: evt.target.value })
-  }
-
-  handleNewRoomSubmit (evt) {
+  handleNewRoomSubmit (room) {
     this.setState({
-      rooms: this.state.rooms.concat([this.state.newRoom]),
-      room: this.state.newRoom,
-      newRoom: ''
+      rooms: this.state.rooms.concat([room]),
+      room: room
     })
     this.getMessages(messages => {
       this.renderMessages(messages)
     })
-    evt.preventDefault()
   }
 
-  handleChangeMessage (evt) {
-    this.setState({ messageText: evt.target.value })
-  }
-
-  handleSubmitMessage (evt) {
-    this.submitMessage(this.state.messageText, messages => {
+  handleSubmitMessage (text) {
+    this.submitMessage(text, messages => {
       this.renderMessages(messages)
     })
     this.setState({ messageText: '' })
-    evt.preventDefault()
   }
 
   render () {
@@ -103,7 +81,6 @@ class App extends React.Component {
       body = (
         <Username
           onSubmit={this.handleSubmitUser}
-          onChange={this.handleUserChange}
         />
       )
     } else {
@@ -116,9 +93,7 @@ class App extends React.Component {
               value={this.state.room}
             />
             <NewRoom
-              value={this.state.newRoom}
               onSubmit={this.handleNewRoomSubmit}
-              onChange={this.handleNewRoomChange}
             />
           </div>
           <div />
@@ -127,9 +102,7 @@ class App extends React.Component {
             messages={this.state.messages}
           />
           <MessageForm
-            value={this.state.messageText}
             onSubmit={this.handleSubmitMessage}
-            onChange={this.handleChangeMessage}
           />
         </div>
       )
@@ -148,69 +121,3 @@ class App extends React.Component {
 }
 
 export default App
-
-// setUser () {
-//   this.socketRooms(rooms => {
-//     this.setState({
-//       user: document.querySelector('#username-input').value,
-//       rooms: rooms
-//     }, () => console.log(this.state))
-//   })
-// }
-
-// handleChatMessage (evt) {
-//   this.socketChat(document.querySelector('#input-text').value, messages => {
-//     this.renderMessages(messages)
-//   })
-// }
-
-// socketRooms (cb) {
-//   socket.emit('get rooms')
-//   socket.on('get rooms', (rooms) => cb(rooms))
-// }
-
-// socketRoom (room, cb) {
-//   this.setState({
-//     room: room
-//   })
-//   socket.emit('room', room)
-//   socket.on('render messages', messages => cb(messages))
-// }
-
-// handleNewRoom (evt) {
-//   console.log(this)
-//   const newRoom = document.querySelector('#input-new-room').value
-//   this.setState({
-//     rooms: this.state.rooms.concat([newRoom]),
-//     room: newRoom
-//   })
-// }
-
-// if (!this.state.user) {
-//   return (
-//     <div>
-//       <link href='https://fonts.googleapis.com/css2?family=Russo+One&display=swap' rel='stylesheet' />
-//       <div id='header'>
-//         <h1>Welcome to...Chatter</h1>
-//       </div>
-//       <Username onSubmit={this.handleSubmitUser} onChange={this.handleUserChange} />
-//     </div>
-//   )
-// }
-// return (
-//   <div>
-//     <link href='https://fonts.googleapis.com/css2?family=Russo+One&display=swap' rel='stylesheet' />
-//     <div id='header'>
-//       <h1>Welcome to...Chatter</h1>
-//     </div>
-//     <div id='display-1'>
-//       <div>
-//         <SelectRoom onChange={this.handleChangeRoom} rooms={this.state.rooms} value={this.state.room} />
-//         <NewRoom value={this.state.newRoom} onSubmit={this.handleNewRoomSubmit} onChange={this.handleNewRoomChange} />
-//       </div>
-//       <div />
-//       <Messages user={this.state.user} messages={this.state.messages} />
-//       <MessageForm value={this.state.messageText} onSubmit={this.handleSubmitMessage} onChange={this.handleChangeMessage} />
-//     </div>
-//   </div>
-// )
