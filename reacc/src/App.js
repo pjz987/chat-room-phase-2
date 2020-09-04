@@ -1,6 +1,12 @@
 import React from 'react'
 import './App.css'
-import { Username, Messages, SelectRoom, NewRoom, MessageForm } from './Components'
+// import { Username, Messages, SelectRoom, NewRoom, MessageForm } from './Components'
+import Username from './components/Username'
+import Messages from './components/Messages'
+import SelectRoom from './components/SelectRoom'
+import NewRoom from './components/NewRoom'
+import MessageForm from './components/MessageForm'
+import RoomNavigator from './components/RoomNavigator'
 import io from 'socket.io-client'
 const socket = io()
 
@@ -87,7 +93,8 @@ class App extends React.Component {
       body = (
         <div id='display-1'>
           <div>
-            <SelectRoom
+            <RoomNavigator
+            // <SelectRoom
               onChange={this.handleChangeRoom}
               rooms={this.state.rooms}
               value={this.state.room}
