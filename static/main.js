@@ -35,7 +35,6 @@ inputText.addEventListener('keydown', evt => {
 })
 socket.on('typing', user => {
   if (user !== state.user) {
-    el.lastElementChild.innerText = `${user} is typing...`
   }
 })
 socket.on('stop typing', () => {
