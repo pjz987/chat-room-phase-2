@@ -44,11 +44,11 @@ select:focus {
   outline: transparent;
 }
 
-#username_input {
+.username-password {
   text-align: center;
 }
 
-#username_input:focus {
+.username-password:focus {
   color: #8f2543;
   outline: transparent;
 
@@ -60,11 +60,22 @@ select:focus {
 
 #header {
   text-align: center;
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+}
+
+#header > * {
+  padding: 0 15px;
 }
 
 h1 {
   color: #8f2543;
   /* font-family: 'Special Elite', cursive; */
+}
+
+h1 > .link {
+  margin-left: 15px;
 }
 
 #message {
@@ -81,6 +92,7 @@ h1 {
   overflow-y: auto;
   background-color: #bcd1d0;
   list-style-type: none;
+  width: 75vw;
 }
 
 .end {
@@ -105,4 +117,54 @@ span.not-user {
 
 .flex {
   display: flex;
+}
+
+main {
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+}
+
+main > * {
+  border: 2px solid #272442;
+  border-radius: 5px;
+  height: 70vh;
+  overflow-y: auto;
+  background-color: #bcd1d0;
+  list-style-type: none;
+  margin: 0 15px;
+}
+
+ul.rooms {
+  list-style-type: none;
+}
+
+nav.rooms {
+  width: 15vw;
+}
+
+.link:visited, .link {
+  color: #ba6c48;
+}
+
+header.rooms {
+  font-size: 1.5rem;
+  text-decoration: underline;
+}
+
+.link:hover {
+  background-color: gray;
+  transition: background-color 1s;
+}
+
+/* .link: */
+
+#forms {
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+}
+
+#forms > * {
+  margin: 0 15px;
 }

@@ -1,16 +1,26 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import moment from 'moment'
 
 export default function Messages (props) {
+  const { room } = useParams()
+  props.changeRoom(room)
   if (!props.messages) return null
   return (
     <ul id='messages'>
-      {props.messages.map(message =>
-        <Message
-          key={message.id}
-          message={message}
-          user={props.user}
-        />)}
+      {props.messages
+        .filter(message => message.room === room)
+        .map(message => {
+          console.log(message, message.id)
+          return (
+            <Message
+              key={message.id}
+              message={message}
+              user={props.user}
+            />
+          )
+        }
+        )}
     </ul>
   )
 }
@@ -35,13 +45,12 @@ function StyleMessage (props) {
 }
 
 function Message (props) {
-  console.log(props)
   const momentDate = moment(props.message.date).format('h:mm:ss a')
   const isUser = props.message.username === props.user
   const className = props.message.username === props.user ? 'user' : 'not-user'
   return (
-    <div className={isUser ? 'message end' : 'message start'}>
-      <li className='msg'>
+    <div key={props.message.id} className={isUser ? 'message end' : 'message start'}>
+      <li key={props.message.id} className='msg'>
         <span className={className}><b><i>{props.message.username}: </i></b></span>
         <StyleMessage text={props.message.text} />
         <span> -- {momentDate}</span>

@@ -6,7 +6,7 @@ async function openDb () {
     filename: 'messages.sqlite3',
     driver: sqlite3.Database
   })
-  const result = await db.all('SELECT username, text, room, date FROM messages')
+  const result = await db.all('SELECT id, username, text, room, date FROM messages')
 
   return result
 }
@@ -26,7 +26,7 @@ async function writeDb (username, text, room) {
       $date: new Date().toISOString()
     }
   )
-  const result = await db.all('SELECT username, text, room, date FROM messages')
+  const result = await db.all('SELECT id, username, text, room, date FROM messages')
 
   return result
 }

@@ -5,32 +5,48 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import chroma from 'chroma-js'
+import Messages from './Messages'
+// import NewRoom from './NewRoom'
 
 export default function RoomNavigator (props) {
+  const colors = chroma.scale(['yellow', 'navy']).mode('lch')
   return (
     <Router>
-      <select value={props.value} onChange={props.onChange} id='room'>
-        <optgroup label='Pick a room...'>
-          <option
-            value=''
-            id='drop-1'
-            disabled='disabled'
-            defaultValue
-            className='disabled'
-            hidden
-          >
-          Rooms...
-          </option>
-          {props.rooms.map(room => {
+      <main>
+        <nav className='rooms'>
+          <header className='rooms'>Rooms:</header>
+          <div className='rooms'>
+            {props.rooms.map((room, i) => {
+              // const colorNum = (i / props.rooms.length) + (i * )
+              const color = colors(i / props.rooms.length)
+              // console.log(colorNum)
+              return (
+                <div className='link' key={i}>
+                  <Link style={{ color: color }} className='link' to={`/rooms/${room}`}>{room}</Link>
+                </div>
+              )
+            })}
+          </div>
+        </nav>
+        <Switch>
+          {props.rooms.map((room, i) => {
             return (
-              <option key={room}>
-                <Link to={`/rooms/${room}`} />
-              </option>
+              <Route
+                key={i}
+                path='/rooms/:room'
+                children={
+                  <Messages
+                    changeRoom={props.changeRoom}
+                    messages={props.messages}
+                    user={props.user}
+                  />
+                }
+              />
             )
-          }
-          )}
-        </optgroup>
-      </select>
+          })}
+        </Switch>
+      </main>
     </Router>
   )
 }

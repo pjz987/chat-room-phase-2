@@ -41,6 +41,7 @@ io.on('connection', socket => {
 
   socket.on('get messages', () => {
     openDb().then(messages => {
+      console.log(messages)
       io.emit('render messages', messages)
     })
   })

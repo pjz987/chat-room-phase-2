@@ -1,12 +1,21 @@
 import React from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from 'react-router-dom'
 import './App.css'
 // import { Username, Messages, SelectRoom, NewRoom, MessageForm } from './Components'
+// import Messages from './components/Messages'
+// import SelectRoom from './components/SelectRoom'
 import Username from './components/Username'
-import Messages from './components/Messages'
-import SelectRoom from './components/SelectRoom'
 import NewRoom from './components/NewRoom'
 import MessageForm from './components/MessageForm'
 import RoomNavigator from './components/RoomNavigator'
+import LogIn from './components/LogIn'
+import SignUp from './components/SignUp'
 import io from 'socket.io-client'
 const socket = io()
 
@@ -54,10 +63,15 @@ class App extends React.Component {
     })
   }
 
+  changeRoom = (room) => {
+    this.state.room = room
+    console.log(this.state)
+  }
+
   renderMessages (messages) {
     this.setState({
       messages: messages.filter(msg => msg.room === this.state.room)
-    })
+    }, () => console.log(this.state))
   }
 
   handleSubmitUser (user) {
@@ -91,38 +105,59 @@ class App extends React.Component {
       )
     } else {
       body = (
-        <div id='display-1'>
-          <div>
-            <RoomNavigator
-            // <SelectRoom
-              onChange={this.handleChangeRoom}
-              rooms={this.state.rooms}
-              value={this.state.room}
-            />
+        <div>
+          <RoomNavigator
+            onChange={this.handleChangeRoom}
+            rooms={this.state.rooms}
+            value={this.state.room}
+            messages={this.state.messages}
+            user={this.state.user}
+            changeRoom={this.changeRoom}
+          />
+          <div id='forms'>
             <NewRoom
               onSubmit={this.handleNewRoomSubmit}
             />
+            <MessageForm
+              onSubmit={this.handleSubmitMessage}
+            />
           </div>
-          <div />
-          <Messages
-            user={this.state.user}
-            messages={this.state.messages}
-          />
-          <MessageForm
-            onSubmit={this.handleSubmitMessage}
-          />
         </div>
       )
     }
 
     return (
-      <div>
+      <Router>
         <link href='https://fonts.googleapis.com/css2?family=Russo+One&display=swap' rel='stylesheet' />
         <div id='header'>
-          <h1>Welcome to...Chatter</h1>
+          <h1>Welcome to...Chatter &copy;Billy -- All Rights Reserved</h1>
+          <h1>
+            <Link className='link' to='/login'>Login</Link>
+            <Link className='link' to='/logout'>Logout</Link>
+            <Link className='link' to='/sign-up'>Sign Up</Link>
+          </h1>
         </div>
-        {body}
-      </div>
+        <Switch>
+          <Route path='/rooms'>
+            {this.state.user ? body : <div>Login or Sign Up</div>}
+          </Route>
+          <Route path='/login'>
+            <LogIn
+              onSubmit={this.handleSubmitUser}
+            />
+          </Route>
+          <Route path='/logout'>
+            <Redirect to='/'></Redirect>
+          </Route>
+          <Route path='/sign-up'>
+            <SignUp
+              onSubmit={this.handleSubmitUser}
+            />
+          </Route>
+          <Route path='/'>
+          </Route>
+        </Switch>
+      </Router>
     )
   }
 }
