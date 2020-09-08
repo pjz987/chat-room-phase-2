@@ -45,6 +45,16 @@ export default function RoomNavigator (props) {
               />
             )
           })}
+          <Route
+            path='/rooms'
+            children={
+              <Messages
+                changeRoom={props.changeRoom}
+                messages={props.messages}
+                user={props.user}
+              />
+            }
+          />
         </Switch>
       </main>
     </Router>

@@ -7,14 +7,12 @@ import {
   Redirect
 } from 'react-router-dom'
 import './App.css'
-// import { Username, Messages, SelectRoom, NewRoom, MessageForm } from './Components'
-// import Messages from './components/Messages'
-// import SelectRoom from './components/SelectRoom'
 import Username from './components/Username'
 import NewRoom from './components/NewRoom'
 import MessageForm from './components/MessageForm'
 import RoomNavigator from './components/RoomNavigator'
 import LogIn from './components/LogIn'
+import LogOut from './components/LogOut'
 import SignUp from './components/SignUp'
 import io from 'socket.io-client'
 const socket = io()
@@ -40,7 +38,7 @@ class App extends React.Component {
       this.setState({
         messages: messages,
         rooms: Array.from(new Set(messages.map(msg => msg.room)))
-      }, () => console.log(this.state))
+      })
     })
   }
 
@@ -65,12 +63,12 @@ class App extends React.Component {
 
   changeRoom = (room) => {
     this.state.room = room
-    console.log(this.state)
+    // this.setState({ room: room })
   }
 
   renderMessages (messages) {
     this.setState({
-      messages: messages.filter(msg => msg.room === this.state.room)
+      messages: messages//.filter(msg => msg.room === this.state.room)
     }, () => console.log(this.state))
   }
 
@@ -83,9 +81,9 @@ class App extends React.Component {
       rooms: this.state.rooms.concat([room]),
       room: room
     })
-    this.getMessages(messages => {
-      this.renderMessages(messages)
-    })
+    // this.getMessages(messages => {
+    //   this.renderMessages(messages)
+    // })
   }
 
   handleSubmitMessage (text) {
@@ -93,6 +91,10 @@ class App extends React.Component {
       this.renderMessages(messages)
     })
     this.setState({ messageText: '' })
+  }
+
+  logOut = () => {
+    this.setState({ user: '' })
   }
 
   render () {
@@ -132,8 +134,10 @@ class App extends React.Component {
         <div id='header'>
           <h1>Welcome to...Chatter &copy;Billy -- All Rights Reserved</h1>
           <h1>
-            <Link className='link' to='/login'>Login</Link>
-            <Link className='link' to='/logout'>Logout</Link>
+            {this.state.user 
+              ? <Link className='link' to='/logout'>Logout</Link>
+              : <Link className='link' to='/login'>Login</Link>
+            }
             <Link className='link' to='/sign-up'>Sign Up</Link>
           </h1>
         </div>
@@ -147,7 +151,7 @@ class App extends React.Component {
             />
           </Route>
           <Route path='/logout'>
-            <Redirect to='/'></Redirect>
+            <LogOut to='/' logOut={this.logOut} />
           </Route>
           <Route path='/sign-up'>
             <SignUp

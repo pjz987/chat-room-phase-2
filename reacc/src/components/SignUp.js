@@ -39,20 +39,20 @@ export default class SignUp extends React.Component {
     return (
       <form id='username' onSubmit={this.handleSubmit}>
         <input
-          class='username-password'
+          className='username-password'
           placeholder='Choose username..'
           type='text'
           onChange={this.handleChangeName}
         />
         <input
-          class='username-password'
+          className='username-password'
           placeholder='Enter
           password'
           type='password'
           onChange={this.handleChangePassword1}
         />
         <input
-          class='username-password'
+          className='username-password'
           placeholder='Enter
           password'
           type='password'

@@ -27,7 +27,7 @@ export default class LogIn extends React.Component {
 
   render () {
     if (this.state.redirect) {
-      return <Redirect to='/rooms'></Redirect>
+      return <Redirect to='/rooms/'></Redirect>
     }
     return (
       <form id='username' onSubmit={this.handleSubmit}>
