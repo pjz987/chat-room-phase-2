@@ -19,8 +19,8 @@ export default function RoomNavigator (props) {
           <div className='rooms'>
             {props.rooms.map((room, i) => {
               // const colorNum = (i / props.rooms.length) + (i * )
-              const color = colors(i / props.rooms.length)
-              // console.log(colorNum)
+              const color = colors(i / (props.rooms.length - 1))
+              console.log(color)
               return (
                 <div className='link' key={i}>
                   <Link style={{ color: color }} className='link' to={`/rooms/${room}`}>{room}</Link>
