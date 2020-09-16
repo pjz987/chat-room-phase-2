@@ -106,9 +106,9 @@ class App extends React.Component {
     console.log(room)
     this.setState({
       rooms: this.state.rooms.concat([room]),
-      // room: room
+      room: room
     }, () => {
-      // console.log(this.state.rooms[this.state.rooms.length - 1], 'newroomsubmit')
+      console.log(this.state)
       cb(this.state.rooms[this.state.rooms.length - 1])
     })
   }
@@ -125,7 +125,7 @@ class App extends React.Component {
   }
 
   render () {
-    console.log(this.state)
+    console.log('this.state:', this.state)
     let body
     if (!this.state.user) {
       body = (
