@@ -69,6 +69,10 @@ select:focus {
   padding: 0 15px;
 }
 
+#header > h1 > span {
+  font-family: 'Rajdhani', sans-serif;
+}
+
 h1 {
   color: #8f2543;
   /* font-family: 'Special Elite', cursive; */

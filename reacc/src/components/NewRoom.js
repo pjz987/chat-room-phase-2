@@ -1,26 +1,39 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
-export default class NewRoom extends React.Component {
+export default function NewRoom (props) {
+  const history = useHistory()
+  function redirectNewRoom (room) {
+    console.log('this line', room)
+    // if (err) return console.log(err)
+    history.push(`/rooms/${room}`)
+  }
+  return <NewRoomForm
+    onSubmit={props.onSubmit}
+    redirectNewRoom={redirectNewRoom}
+  />
+}
+
+class NewRoomForm extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       room: ''
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange (evt) {
+  handleChange = evt => {
     this.setState({ room: evt.target.value })
   }
 
-  handleSubmit (evt) {
-    this.props.onSubmit(this.state.room)
+  handleSubmit = evt => {
+    this.props.onSubmit(this.state.room, () => this.props.redirectNewRoom(this.state.room))
     this.setState({ room: '' })
     evt.preventDefault()
   }
 
   render () {
+    console.log(this)
     return (
       <form onSubmit={this.handleSubmit} style={{ display: 'inline' }}>
         <input

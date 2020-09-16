@@ -5,14 +5,14 @@ export default class LogIn extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: '',
+      username: '',
       password: '',
       redirect: false
     }
   }
 
   handleChangeName = evt => {
-    this.setState({ user: evt.target.value })
+    this.setState({ username: evt.target.value })
   }
 
   handleChangePassword = evt => {
@@ -20,7 +20,7 @@ export default class LogIn extends React.Component {
   }
 
   handleSubmit = evt => {
-    this.props.onSubmit(this.state.user)
+    this.props.onSubmit(this.state.username, this.state.password)
     evt.preventDefault()
     this.setState({ redirect: true })
   }

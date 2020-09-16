@@ -6,15 +6,15 @@ export default class MessageForm extends React.Component {
     this.state = {
       text: ''
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
+    // this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange (evt) {
+  handleChange = evt => {
     this.setState({ text: evt.target.value })
   }
 
-  handleSubmit (evt) {
+  handleSubmit = evt => {
     this.props.onSubmit(this.state.text)
     this.setState({ text: '' })
     evt.preventDefault()

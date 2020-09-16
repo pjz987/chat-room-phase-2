@@ -11,6 +11,7 @@ import Messages from './Messages'
 
 export default function RoomNavigator (props) {
   const colors = chroma.scale(['yellow', 'navy']).mode('lch')
+  console.log(props.rooms, 'room navigator')
   return (
     <Router>
       <main>
@@ -18,9 +19,10 @@ export default function RoomNavigator (props) {
           <header className='rooms'>Rooms:</header>
           <div className='rooms'>
             {props.rooms.map((room, i) => {
+              console.log(room)
               // const colorNum = (i / props.rooms.length) + (i * )
               const color = colors(i / (props.rooms.length - 1))
-              console.log(color)
+              // console.log(color)
               return (
                 <div className='link' key={i}>
                   <Link style={{ color: color }} className='link' to={`/rooms/${room}`}>{room}</Link>

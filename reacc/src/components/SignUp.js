@@ -26,7 +26,7 @@ export default class SignUp extends React.Component {
 
   handleSubmit = evt => {
     if (this.state.password1 === this.state.password2) {
-      this.props.onSubmit(this.state.user)
+      this.props.onSubmit(this.state.user, this.state.password1)
       evt.preventDefault()
       this.setState({ redirect: true })
     }
@@ -58,7 +58,7 @@ export default class SignUp extends React.Component {
           type='password'
           onChange={this.handleChangePassword2}
         />
-        <button>Log In</button>
+        <button>Sign Up</button>
       </form>
     )
   }

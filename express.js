@@ -1,9 +1,21 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const morgan = require('morgan')
+
+const AuthController = require('./controllers/auth')
+// const ProtectedRoutes = require('./controllers/protected')
+// const { openDb, writeDb } = require('./sql-db')
+const { authenticate, getMessages, postMessage } = require('./mongo-db')
+
 const app = express()
-// const fs = require('fs')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
-const { openDb, writeDb } = require('./sql-db')
+
+app.use(express.json())
+app.use(morgan('tiny'))
+
+app.use('/', AuthController)
+// app.use('/', ProtectedRoutes)
 
 app.get('/', (req, res) => {
   res.json({ test: 'test' })
@@ -11,38 +23,23 @@ app.get('/', (req, res) => {
 })
 io.on('connection', socket => {
   console.log('someone\'s on')
-  socket.on('say hey', () => console.log('hey'))
 
-  socket.on('get rooms', () => {
-    openDb().then(messages => {
-      console.log({ messages })
-      const rooms = []
-      messages.forEach(msg => {
-        if (!rooms.includes(msg.room)) {
-          rooms.push(msg.room)
-        }
-      })
-      console.log(rooms)
-      io.emit('get rooms', rooms)
-    })
-  })
-
-  socket.on('chat message', (text, nick, room) => {
-    writeDb(nick, text, room).then(messages => {
+  socket.on('chat message', async (token, text, room) => {
+    const payload = await authenticate(token)
+    if (!payload) return
+    const messages = await postMessage(payload, text, room, messages => {
+      console.log('socket.on(\'chat message\'', { messages })
       io.emit('render messages', messages)
     })
   })
 
-  socket.on('room', room => {
-    openDb().then(messages => {
-      io.emit('render messages', messages)
-    })
-  })
-
-  socket.on('get messages', () => {
-    openDb().then(messages => {
-      console.log(messages)
-      io.emit('render messages', messages)
+  socket.on('get messages', async token => {
+    const payload = await authenticate(token)
+    console.log({ payload })
+    if (!payload) return
+    getMessages(messages => {
+      console.log('socket.on(\'get messages \'', { messages })
+      if (messages) io.emit('render messages', messages)
     })
   })
 
@@ -58,4 +55,24 @@ io.on('connection', socket => {
   })
 })
 
-http.listen(8000)
+const connectDatabase = async (dbName = 'chat-app', hostname = 'localhost') => {
+  const db = await mongoose.connect(
+    `mongodb://${hostname}/${dbName}`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true
+    }
+  )
+  console.log(`Database connected at mongodb://${hostname}/${dbName}...`)
+  return db
+}
+
+const startServer = port => {
+  http.listen(port, async () => {
+    await connectDatabase()
+    console.log(`Server listening on port ${port}...`)
+  })
+}
+
+startServer(8000)

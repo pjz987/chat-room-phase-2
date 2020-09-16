@@ -5,8 +5,8 @@ import moment from 'moment'
 export default function Messages (props) {
   const { room } = useParams()
   props.changeRoom(room)
-  console.log(props.messages)
-  console.log(room)
+  console.log('messages: ', props.messages)
+  // console.log(room)
   if (!room) {
     return (
       <ul
@@ -28,7 +28,7 @@ export default function Messages (props) {
         .map(message => {
           return (
             <Message
-              key={message.id}
+              key={message._id}
               message={message}
               user={props.user}
             />
@@ -60,13 +60,13 @@ function StyleMessage (props) {
 
 function Message (props) {
   const momentDate = moment(props.message.date).format('h:mm:ss a')
-  const isUser = props.message.username === props.user
+  const isUser = props.message.user.username === props.user
   console.log(isUser)
-  const className = props.message.username === props.user ? 'user' : 'not-user'
+  const className = props.message.user.username === props.user ? 'user' : 'not-user'
   return (
     <div key={props.message.id} className={isUser ? 'message end' : 'message start'}>
       <li key={props.message.id} className='msg'>
-        <span className={className}><b><i>{props.message.username}: </i></b></span>
+        <span className={className}><b><i>{props.message.user.username}: </i></b></span>
         <StyleMessage text={props.message.text} />
         <span> -- {momentDate}</span>
       </li>

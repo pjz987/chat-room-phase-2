@@ -4,7 +4,6 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
 } from 'react-router-dom'
 import './App.css'
 import Username from './components/Username'
@@ -24,35 +23,25 @@ class App extends React.Component {
       user: '',
       room: '',
       rooms: [],
-      messages: []
+      messages: [],
+      token: ''
     }
-
-    this.handleSubmitUser = this.handleSubmitUser.bind(this)
-    this.handleNewRoomSubmit = this.handleNewRoomSubmit.bind(this)
-    this.handleChangeRoom = this.handleChangeRoom.bind(this)
-    this.handleSubmitMessage = this.handleSubmitMessage.bind(this)
   }
 
-  componentDidMount () {
-    this.getMessages(messages => {
-      this.setState({
-        messages: messages,
-        rooms: Array.from(new Set(messages.map(msg => msg.room)))
-      })
+  getMessages = cb => {
+    socket.emit('get messages', this.state.token)
+    socket.on('render messages', messages => {
+      console.log('getMessages: ', {messages})
+      cb(messages)
     })
   }
 
-  getMessages (cb) {
-    socket.emit('get messages')
+  submitMessage =  (text, cb) => {
+    socket.emit('chat message', this.state.token, text, this.state.room)
     socket.on('render messages', messages => cb(messages))
   }
 
-  submitMessage (text, cb) {
-    socket.emit('chat message', text, this.state.user, this.state.room)
-    socket.on('render messages', messages => cb(messages))
-  }
-
-  handleChangeRoom (evt) {
+  handleChangeRoom = evt => {
     this.setState({
       room: evt.target.value
     })
@@ -61,32 +50,70 @@ class App extends React.Component {
     })
   }
 
-  changeRoom = (room) => {
+  changeRoom = room => {
     this.state.room = room
-    // this.setState({ room: room })
   }
 
-  renderMessages (messages) {
+  renderMessages = messages => {
     this.setState({
-      messages: messages//.filter(msg => msg.room === this.state.room)
-    }, () => console.log(this.state))
+      messages: messages
+    })
   }
 
-  handleSubmitUser (user) {
-    this.setState({ user: user })
+  handleSignUp = (username, password) => {
+    fetch('/sign-up', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    })
+      .then(res => {
+        if (res.status === 201) this.handleLogin(username, password)
+      })
+      .catch(err => console.log(err))
   }
 
-  handleNewRoomSubmit (room) {
+  handleLogin = (username, password) => {
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    })
+      .then(res => {
+        console.log(87)
+        if (res.status === 202) return res.json()
+      })
+      .then(data => {
+        console.log(91)
+        this.setState({ token: data.token, user: username }, () => {
+          console.log(93)
+          this.getMessages(messages => {
+            console.log('handleLogin: ', { messages })
+            this.setState({
+              messages: messages,
+              rooms: Array.from(new Set(messages.map(msg => msg.room)))
+            })
+          })
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+  handleNewRoomSubmit = (room, cb) => {
+    console.log(room)
     this.setState({
       rooms: this.state.rooms.concat([room]),
-      room: room
+      // room: room
+    }, () => {
+      // console.log(this.state.rooms[this.state.rooms.length - 1], 'newroomsubmit')
+      cb(this.state.rooms[this.state.rooms.length - 1])
     })
-    // this.getMessages(messages => {
-    //   this.renderMessages(messages)
-    // })
   }
 
-  handleSubmitMessage (text) {
+  handleSubmitMessage = text => {
     this.submitMessage(text, messages => {
       this.renderMessages(messages)
     })
@@ -94,15 +121,16 @@ class App extends React.Component {
   }
 
   logOut = () => {
-    this.setState({ user: '' })
+    this.setState({ user: '', token: '' })
   }
 
   render () {
+    console.log(this.state)
     let body
     if (!this.state.user) {
       body = (
         <Username
-          onSubmit={this.handleSubmitUser}
+          onSubmit={this.handleSignUp}
         />
       )
     } else {
@@ -131,8 +159,9 @@ class App extends React.Component {
     return (
       <Router>
         <link href='https://fonts.googleapis.com/css2?family=Russo+One&display=swap' rel='stylesheet' />
+        <link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet"></link>
         <div id='header'>
-          <h1>Welcome to...Chatter &copy;Billy -- All Rights Reserved</h1>
+          <h1>Welcome to <span>chit/chat</span></h1>
           <h1>
             {this.state.user 
               ? <Link className='link' to='/logout'>Logout</Link>
@@ -143,11 +172,11 @@ class App extends React.Component {
         </div>
         <Switch>
           <Route path='/rooms'>
-            {this.state.user ? body : <div>Login or Sign Up</div>}
+            {this.state.token ? body : <div>Login or Sign Up</div>}
           </Route>
           <Route path='/login'>
             <LogIn
-              onSubmit={this.handleSubmitUser}
+              onSubmit={this.handleLogin}
             />
           </Route>
           <Route path='/logout'>
@@ -155,7 +184,7 @@ class App extends React.Component {
           </Route>
           <Route path='/sign-up'>
             <SignUp
-              onSubmit={this.handleSubmitUser}
+              onSubmit={this.handleSignUp}
             />
           </Route>
           <Route path='/'>
